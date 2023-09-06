@@ -1,0 +1,26 @@
+.topbar {
+  color: #fff;
+  background-color: #fff;
+  padding: 16px;
+}
+
+.topbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.topbar li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.topbar a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.logo {
+  width: 200px;
+}

@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+
+button {
+  cursor: pointer;
+}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+  background-color: #dadfe5;
+  margin: 0px;
+}
+
+.search input {
+  border-radius: 9px;
+  border: 1px solid #c1c1c1;
+  padding: 10px 20px 10px 5px;
+}
+
+.color-primary {
+  background: #ffdf00;
+  color: #0e255f;
+}
+
+.add-button button {
+  width: 87px;
+  height: 50px;
+  border: 0px;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}

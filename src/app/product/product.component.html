@@ -1,0 +1,64 @@
+<div class="product-container">
+  <ng-container *ngIf="!updateProduct; else elseTemplate">
+    <div class="top-table">
+      <div class="search">
+        <input type="search" id="search" placeholder="Search"  [(ngModel)]="searchText">
+      </div>
+  
+      <div class="add-button">
+        <button class="color-primary" type="button" [routerLink]="['/create']">Agregar</button>
+      </div>
+  
+    </div>
+    <div class="table">
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Logo</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th >Fecha de Liberación</th>
+              <th>Fecha de Revisión</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products | productFilter: searchText | pageLimit:selectedLimit">
+              <td> <img class="logo-img" [src]="product.logo" alt="product.name"></td>
+              <td>{{product.name}}</td>
+              <td>{{product.description}}</td>
+              <td>{{product.date_release | date: 'dd/MM/yyyy'}}</td>
+              <td>{{product.date_revision | date: 'dd/MM/yyyy'}}</td>
+              <td>
+                <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="editProduct(product)">Editar Producto</button>
+                  <button mat-menu-item (click)="deleteProduct(product.id)">Borrar Producto</button>
+                </mat-menu>
+               
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-footer">
+        <div class="results">
+          <span>Resultados: {{ products.length }}</span>
+        </div>
+        <div class="per-page">
+          <select class="show-select" [(ngModel)]="selectedLimit">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <app-product-update (productUpdated)="productUpdated()" [product]="product"></app-product-update>
+  </ng-template>
+  
+</div>

@@ -1,0 +1,114 @@
+.table {
+  background-color: white;
+}
+
+.product-container {
+  margin: 7vw;
+  padding-bottom: 40px;
+}
+
+.top-table {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Estilo para la tabla */
+.table-container {
+  padding: 10px 20px 0px 30px;
+  overflow-x: auto; /* Hace que la tabla sea horizontalmente desplazable en pantallas pequeñas */
+}
+
+.table-footer {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+td {
+  background: white;
+}
+
+
+/* Estilo para la primera columna (Campo) */
+td:first-child {
+  font-weight: bold;
+}
+
+/* Estilo para la segunda columna (Validación) */
+td:nth-child(2) {
+  word-break: break-word; /* Rompe palabras largas si es necesario */
+  max-width: 485px; /* Limita el ancho máximo de la columna de validación */
+}
+
+.logo-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.show-select {
+  padding: 5px 30px 5px 10px;
+  border-radius: 7px;
+}
+
+.results {
+  display: flex;
+  align-items: center;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Estilos para el submenú */
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 24px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+
+

@@ -1,0 +1,103 @@
+<div class="card">
+  <h1>Formulario de Registro</h1>
+  <hr>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form">
+    <div class="row">
+      <div class="column">
+
+        <div class="form-group">
+          <label for="id">ID:</label>
+          <input type="text" id="id" formControlName="id" [disabled]="isEdit" [ngClass]="{'error': isFieldInvalid('id')}">
+          <span *ngIf="productForm.get('id')?.hasError('required') && productForm.get('id')?.touched" class="text-danger">
+            ID es obligatorio.
+          </span>
+          <span *ngIf="productForm.get('id')?.hasError('isInvalid') && productForm.get('id')?.touched" class="text-danger">
+            ID no es valido.
+          </span>
+          <span *ngIf="productForm.get('id')?.hasError('minlength') && productForm.get('id')?.touched" class="text-danger">
+            ID debe tener al menos 3 caracteres.
+          </span>
+          <span *ngIf="productForm.get('id')?.hasError('maxlength') && productForm.get('id')?.touched" class="text-danger">
+            ID no puede tener más de 10 caracteres.
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="description">Descripción:</label>
+          <input type="text" id="description" formControlName="description" [ngClass]="{'error': isFieldInvalid('description')}">
+          <span *ngIf="productForm.get('description')?.hasError('required') && productForm.get('description')?.touched" class="text-danger">
+            Descripción es obligatoria.
+          </span>
+          <span *ngIf="productForm.get('description')?.hasError('minlength') && productForm.get('description')?.touched" class="text-danger">
+            Descripción debe tener al menos 10 caracteres.
+          </span>
+          <span *ngIf="productForm.get('description')?.hasError('maxlength') && productForm.get('description')?.touched" class="text-danger">
+            Descripción no puede tener más de 200 caracteres.
+          </span>
+        </div>
+        
+      </div>
+
+      <div class="column">
+        <div class="form-group">
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" formControlName="name" [ngClass]="{'error': isFieldInvalid('name')}">
+          <span *ngIf="productForm.get('name')?.hasError('required') && productForm.get('name')?.touched" class="text-danger">
+            Nombre es obligatorio.
+          </span>
+          <span *ngIf="productForm.get('name')?.hasError('minlength') && productForm.get('name')?.touched" class="text-danger">
+            Nombre debe tener al menos 5 caracteres.
+          </span>
+          <span *ngIf="productForm.get('name')?.hasError('maxlength') && productForm.get('name')?.touched" class="text-danger">
+            Nombre no puede tener más de 100 caracteres.
+          </span>
+        </div>
+        
+
+        <div class="form-group">
+          <label for="logo">URL del Logo:</label>
+          <input type="text" id="logo" formControlName="logo" [ngClass]="{'error': isFieldInvalid('logo')}">
+          <span *ngIf="productForm.get('logo')?.hasError('required') && productForm.get('logo')?.touched" class="text-danger">
+            URL del Logo es obligatoria.
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column">
+        <div class="form-group">
+          <label for="date_release">Fecha de Lanzamiento:</label>
+          <input type="date" id="date_release" formControlName="date_release" #e (change)="verifytype(e.value)" [ngClass]="{'error': isFieldInvalid('date_release')}">
+          <span *ngIf="productForm.get('date_release')?.hasError('required') && productForm.get('date_release')?.touched" class="text-danger">
+            Fecha de Lanzamiento es obligatoria.
+          </span>
+          <span *ngIf="productForm.get('date_release')?.hasError('minDate') && productForm.get('date_release')?.touched" class="text-danger">
+            La Fecha de Lanzamiento debe ser hoy o posterior.
+          </span>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="form-group">
+          <label for="date_revision">Fecha de Revisión:</label>
+          <input type="date" id="date_revision" formControlName="date_revision" [ngClass]="{'error': isFieldInvalid('date_revision')}">
+          <span *ngIf="productForm.get('date_revision')?.hasError('required') && productForm.get('date_revision')?.touched" class="text-danger">
+            Fecha de Revisión es obligatoria.
+          </span>
+          <span *ngIf="productForm.get('date_revision')?.hasError('minDate') && productForm.get('date_revision')?.touched" class="text-danger">
+            La Fecha de Revisión debe ser un año después de la Fecha de Lanzamiento.
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="column text-right">
+        <button type="button" [disabled]="isEdit" (click)="resetForm()" class="btn btn-primary">Reiniciar</button>
+      </div>
+      <div class="column text-left">
+        <button type="submit" [disabled]="productForm.invalid" class="btn button-primary">Enviar</button>
+      </div>
+    </div>
+  </form>
+</div>

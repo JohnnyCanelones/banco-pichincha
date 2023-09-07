@@ -1,0 +1,93 @@
+/* Estilos para la tarjeta (card) */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 80%; /* Ancho de la tarjeta */
+  margin: 0 auto; /* Centrar horizontalmente */
+  text-align: center;
+}
+
+/* Estilos para el título */
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Estilos para el separador */
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+/* Estilos para el formulario */
+.form {
+  display: flex;
+  flex-direction: column; /* Cambiamos la dirección de flex a columna */
+}
+
+/* Estilos para las filas */
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Estilos para las columnas */
+.column {
+  flex: 1;
+  margin-right: 10px;
+}
+
+/* Estilos para los campos de entrada */
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.btn {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+/* Estilos para el botón de enviar */
+.btn-primary {
+  background-color: #dadfe5;
+  color: #0e255f;
+
+}
+
+.button-primary {
+  background: #ffdf00;
+  color: #0e255f;
+}
+
+.button-primary:disabled, .btn-primary:disabled {
+  background: gray; 
+  color: #ccc; 
+  cursor: not-allowed;
+}
+
+
+/* Estilos para los campos de entrada con error */
+.error {
+  border: 1px solid red; /* Cambiar el borde a rojo */
+}
+
+/* Estilos para los mensajes de error */
+.text-danger {
+  display: block;
+  font-size: 12px;
+  color: red;
+}
+
+input {
+  padding: 12px 12px 12px 5px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}

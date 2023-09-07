@@ -34,7 +34,7 @@ export class ProductFormComponent implements OnInit {
    }
 
   ngOnInit() {
-    if (this.product) {
+    if (this.product && this.isEdit) {
       debugger
       this.product.date_release = this.datePipe.transform(this.product.date_release, 'yyyy-MM-dd', 'UTC');;
       this.product.date_revision = this.datePipe.transform((this.product.date_revision), 'yyyy-MM-dd', 'UTC');
@@ -51,10 +51,6 @@ export class ProductFormComponent implements OnInit {
     if (this.isEdit) {
       this.productForm.get('id')?.disable();
     }
-  }
-
-  verifytype($event: any) {
-    console.log(typeof $event, $event)
   }
 
   minDateValidator(isRevisionDate = false) {
@@ -107,10 +103,11 @@ export class ProductFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    debugger
     if (this.productForm.valid) {
       this.productForm.get('id')?.enable();
       this.formSubmit.emit(this.productForm.value);
+    } else {
+      console.log('Formulario Invalidao')
     }
   }
 }

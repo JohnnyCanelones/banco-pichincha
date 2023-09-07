@@ -48,4 +48,50 @@ describe('PageLimitPipe', () => {
 
     expect(result).toEqual([1, 2, 3, 4, 5]);
   });
+
+  it('should return an empty array when limit is zero', () => {
+    const items = [1, 2, 3, 4, 5];
+    const limit = -items.length;
+  
+    const result = pipe.transform(items, limit);
+
+  
+    expect(result).toEqual([]);
+  });
+  
+  it('should return an empty array when items is an empty array', () => {
+    const items: any[] = [];
+    const limit = 3;
+  
+    const result = pipe.transform(items, limit);
+  
+    expect(result).toEqual([]);
+  });
+  
+  it('should return the first item when limit is 1', () => {
+    const items = [1, 2, 3, 4, 5];
+    const limit = 1;
+  
+    const result = pipe.transform(items, limit);
+  
+    expect(result).toEqual([1]);
+  });
+
+  it('should return an empty array when items is null', () => {
+    const items: any = null;
+    const limit = 3;
+  
+    const result = pipe.transform(items, limit);
+  
+    expect(result).toEqual([]);
+  });
+  
+  it('should return the entire array when limit is greater than the array length', () => {
+    const items = [1, 2, 3, 4, 5];
+    const limit = 10;
+  
+    const result = pipe.transform(items, limit);
+  
+    expect(result).toEqual([1, 2, 3, 4, 5]);
+  });
 });

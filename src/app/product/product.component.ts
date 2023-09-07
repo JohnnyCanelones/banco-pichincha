@@ -15,7 +15,7 @@ export class ProductComponent implements OnInit {
   public updateProduct: boolean = false;
   public product!: Product
 
-  constructor(private productProvider: ProductProvider) {}
+  constructor(public productProvider: ProductProvider) {}
 
   ngOnInit() {
     this.getProducts()
@@ -32,7 +32,6 @@ export class ProductComponent implements OnInit {
   }
 
   productUpdated() {
-    debugger
     this.getProducts();
     this.updateProduct = false;
   }

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ProductComponent } from './product.component';
 import { ProductProvider } from '../providers/product.provider';
 import { Product } from '../models/product.model';
@@ -26,10 +26,6 @@ describe('ProductComponent', () => {
   let productProviderSpy: jasmine.SpyObj<ProductProvider>;
 
   beforeEach(() => {
-    const spy = jasmine.createSpyObj('ProductProvider', [
-      'getProducts',
-      'deleteProducts',
-    ]);
     productProviderSpy = jasmine.createSpyObj('ProductProvider', ['getProducts', 'deleteProducts']);
     TestBed.configureTestingModule({
       declarations: [
@@ -70,6 +66,46 @@ describe('ProductComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should call getProducts on ngOnInit', () => {
+    // Simular productos de ejemplo para la prueba
+    const mockProducts = [
+      { id: '1', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+      { id: '2', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+    ];
+
+    // Configurar el espía para que devuelva los productos de ejemplo
+    productProviderSpy.getProducts.and.returnValue(of(mockProducts));
+
+    // Llamar a ngOnInit
+    component.ngOnInit();
+
+    // Verificar que se haya llamado a getProducts del servicio
+    expect(productProviderSpy.getProducts).toHaveBeenCalled();
+
+    // Verificar que los productos se hayan asignado correctamente en el componente
+    expect(component.products).toEqual(mockProducts);
+  });
+
+  it('should call getProducts and update products on calling getProducts', fakeAsync(() => {
+    // Simular productos de ejemplo para la prueba
+    const mockProducts = [
+      { id: '1', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+      { id: '2', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+    ];
+
+    // Configurar el espía para que devuelva los productos de ejemplo
+    productProviderSpy.getProducts.and.returnValue(of(mockProducts));
+
+    // Llamar a getProducts
+    component.getProducts();
+    tick(); // Avanza el reloj virtual para completar la suscripción
+
+    // Verificar que se haya llamado a getProducts del servicio
+    expect(productProviderSpy.getProducts).toHaveBeenCalled();
+
+    // Verificar que los productos se hayan asignado correctamente en el componente
+    expect(component.products).toEqual(mockProducts);
+  }));
 
   it('should handle product update', () => {
     const mockProduct: Product = { id: '1', name: 'Product 1', description: 'Description 1' , logo: '  ', date_release: '2021-01-01', date_revision: '2022-01-01'};
@@ -90,5 +126,28 @@ describe('ProductComponent', () => {
     expect(component.updateProduct).toBe(false);
   });
 
+  it('should update products list and reset updateProduct flag on productUpdated', () => {
+    const getProductsSpy = spyOn(component, 'getProducts');
+    component.productUpdated();
+    expect(getProductsSpy).toHaveBeenCalled();
+    expect(component.updateProduct).toBeFalse();
+  });
+
+  it('should call deleteProduct and show alert on deleting a product', () => {
+    // Configura el objeto espía para que el método deleteProducts devuelva un Observable válido
+    productProviderSpy.deleteProducts.and.returnValue(of({}));
+  
+    // Espía la función 'alert' para que puedas verificar si se llama
+    spyOn(window, 'alert');
+  
+    // Llama a la función que debería invocar deleteProduct
+    component.deleteProduct('productIdToDelete');
+  
+    // Deberías esperar que deleteProducts se haya llamado
+    expect(productProviderSpy.deleteProducts).toHaveBeenCalledWith('productIdToDelete');
+  
+    // Deberías verificar que se haya mostrado una alerta
+    expect(window.alert).toHaveBeenCalledWith('Producto Borrado Correctamente');
+  });
  
 });

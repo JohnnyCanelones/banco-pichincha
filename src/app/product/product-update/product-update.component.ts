@@ -19,9 +19,6 @@ export class ProductUpdateComponent {
     private productProvider: ProductProvider
   ) {}
 
-  ngOnInit(): void {
-    
-  }
 
   handleFormSubmit(formData: Product): void {
     this.productProvider.updatesProducts(formData).subscribe(

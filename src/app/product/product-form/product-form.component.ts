@@ -35,7 +35,6 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
     if (this.product && this.isEdit) {
-      debugger
       this.product.date_release = this.datePipe.transform(this.product.date_release, 'yyyy-MM-dd', 'UTC');;
       this.product.date_revision = this.datePipe.transform((this.product.date_revision), 'yyyy-MM-dd', 'UTC');
       this.productForm.setValue(this.product)

@@ -232,7 +232,6 @@ describe('ProductFormComponent', () => {
       const validator = component.minDateValidator(false); 
     
       const result = validator(control);
-      debugger
       expect(result).toEqual({ minDate: true }); 
     });
   

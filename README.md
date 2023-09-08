@@ -38,7 +38,7 @@ Follow these steps to get the project up and running:
   Use the search bar to filter products by name.
   Adjust the "Items Per Page" dropdown to change the number of products displayed per page.
   Click the "Add Product" button to add a new product.
-  Click the "Edit" button on a product card to edit the product's details.
+  Click the "Edit" button on a product card to edit the products details.
   Click the "Delete" button on a product card to remove the product.
 
 ## Build

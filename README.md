@@ -1,14 +1,45 @@
 # BancoPichincha
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+This is a simple Angular application for managing product data. It allows you to view, add, edit, and delete product information using Angular forms and HTTP requests.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- View a list of products.
+- Add new products with validation.
+- Edit existing products.
+- Delete products.
 
-## Code scaffolding
+## Prerequisites
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Before you begin, ensure you have met the following requirements:
+
+- Angular CLI: Install the Angular CLI globally with `npm install -g @angular/cli`.
+
+## Getting Started
+
+Follow these steps to get the project up and running:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/angular-product-management.git
+
+2. Install project dependencies:
+
+   ```bash
+    npm install
+
+3. Start the development server:
+  ```bash
+    npm install
+
+## Usage
+  Use the navigation menu to browse the list of products.
+  Use the search bar to filter products by name.
+  Adjust the "Items Per Page" dropdown to change the number of products displayed per page.
+  Click the "Add Product" button to add a new product.
+  Click the "Edit" button on a product card to edit the product's details.
+  Click the "Delete" button on a product card to remove the product.
 
 ## Build
 
@@ -17,10 +48,6 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Further help
 

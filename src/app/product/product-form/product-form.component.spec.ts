@@ -56,6 +56,7 @@ describe('ProductFormComponent', () => {
       };
       component.ngOnInit();
       component.productForm.get('id')?.enable()
+      component.productForm.get('date_revision')?.enable()
       console.log(component.productForm.value, component.product);
       
       expect(component.productForm.value).toEqual(component.product);
@@ -98,6 +99,21 @@ describe('ProductFormComponent', () => {
       fixture.detectChanges();
       const idControl = component.productForm.get('id');
       expect(idControl?.disabled).toBeTrue();
+    });
+    it('should disable date_release field when form is filled', () => {
+      component.productForm.setValue({
+        id: 'test-id',
+        name: 'Test Name',
+        description: 'Test Description',
+        logo: 'Test Logo',
+        date_release: '2023-09-15',
+        date_revision: '2024-09-15',
+      });
+      component.ngOnInit();
+    
+      const dateRevisionControl: any = component.productForm.get('date_revision');
+    
+      expect(dateRevisionControl.disabled).toBeTrue();
     });
   });
 
@@ -180,6 +196,7 @@ describe('ProductFormComponent', () => {
         date_revision: '2024-09-15',
       };
 
+      component.productForm.get('date_revision')?.enable()
       component.productForm.setValue(validFormData);
       component.resetForm();
 
@@ -198,12 +215,32 @@ describe('ProductFormComponent', () => {
 
   describe('Form Value Changes', () => {
     it('should handle form value changes', () => {
-      const idControl:any = component.productForm.get('id');
+      const idControl: any = component.productForm.get('id');
       idControl.setValue('test-id');
     
-      idControl.markAsDirty();
+      expect(idControl.value).toBe('test-id');
+    
       idControl.setValue('changed-id');
+    
+      expect(idControl.value).toBe('changed-id');
     });
+    
+    
+    it('should change the release date to one year later', () => {
+      const releaseDate = new Date('2022-09-15');
+      component.productForm.get('date_release')?.setValue(releaseDate);
+  
+      component.changeReleaseDate();
+  
+      const revisedDate = component.productForm.get('date_revision')?.value;
+      const expectedDate = component.datePipe.transform(
+        new Date('2023-09-15'),
+        'yyyy-MM-dd',
+        'UTC'
+      );
+      expect(revisedDate).toBe(expectedDate);
+    });
+  
   });
 
   describe('Test Validators', () => {

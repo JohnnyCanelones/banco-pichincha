@@ -68,7 +68,7 @@
       <div class="column">
         <div class="form-group">
           <label for="date_release">Fecha de Lanzamiento:</label>
-          <input type="date" id="date_release" formControlName="date_release"  [ngClass]="{'error': isFieldInvalid('date_release')}">
+          <input type="date" id="date_release" formControlName="date_release" (change)="changeReleaseDate()"  [ngClass]="{'error': isFieldInvalid('date_release')}">
           <span *ngIf="productForm.get('date_release')?.hasError('required') && productForm.get('date_release')?.touched" class="text-danger">
             Fecha de Lanzamiento es obligatoria.
           </span>

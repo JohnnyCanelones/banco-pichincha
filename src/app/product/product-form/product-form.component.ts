@@ -21,7 +21,7 @@ export class ProductFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productProvider: ProductProvider,
-    private datePipe: DatePipe
+    public datePipe: DatePipe
     ) { 
     this.productForm = this.fb.group({
       id: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(10), this.isValidId()]],
@@ -39,6 +39,8 @@ export class ProductFormComponent implements OnInit {
       this.product.date_revision = this.datePipe.transform((this.product.date_revision), 'yyyy-MM-dd', 'UTC');
       this.productForm.setValue(this.product)
     }
+    this.productForm.get('date_revision')?.disable()
+
     this.productForm.get('id')?.valueChanges
       .pipe(debounceTime(300))
       .subscribe((newValue) => {
@@ -97,13 +99,20 @@ export class ProductFormComponent implements OnInit {
     );
   }
 
+  changeReleaseDate() {
+    const date_revision:Date = new Date(this.productForm.get('date_release')?.value);
+    date_revision.setFullYear(date_revision.getFullYear() + 1);
+    this.productForm.get('date_revision')?.setValue(this.datePipe.transform((date_revision), 'yyyy-MM-dd', 'UTC'));
+  }
+
   resetForm() {
-    this.productForm.reset(); // Esto restablecerá todos los campos del formulario
+    this.productForm.reset();
   }
 
   onSubmit(): void {
     if (this.productForm.valid) {
-      this.productForm.get('id')?.enable();
+    this.productForm.get('date_revision')?.enable()
+    this.productForm.get('id')?.enable();
       this.formSubmit.emit(this.productForm.value);
     } else {
       console.log('Formulario Invalidao')

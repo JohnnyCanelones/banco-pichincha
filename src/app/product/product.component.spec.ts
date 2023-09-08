@@ -13,12 +13,11 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 
-import { DatePipe } from '@angular/common';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 
 describe('ProductComponent', () => {
   let component: ProductComponent;
@@ -31,7 +30,6 @@ describe('ProductComponent', () => {
       declarations: [
         ProductComponent,
         PageLimitPipe,
-        ProductFilterPipe,
         ProductFormComponent,
         ProductCreateComponent,
         ProductUpdateComponent,
@@ -47,11 +45,10 @@ describe('ProductComponent', () => {
         MatMenuModule,
         MatButtonModule
       ],
-      // providers: [
-      //   ProductProvider,
-      //   DatePipe
-      // ]
-      providers: [{ provide: ProductProvider, useValue: productProviderSpy }],
+      providers: [
+        { provide: ProductProvider, useValue: productProviderSpy },
+        ProductFilterPipe
+      ],
     });
 
 
@@ -67,49 +64,40 @@ describe('ProductComponent', () => {
   });
 
   it('should call getProducts on ngOnInit', () => {
-    // Simular productos de ejemplo para la prueba
+
     const mockProducts = [
       { id: '1', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
       { id: '2', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
     ];
 
-    // Configurar el espía para que devuelva los productos de ejemplo
     productProviderSpy.getProducts.and.returnValue(of(mockProducts));
 
-    // Llamar a ngOnInit
     component.ngOnInit();
 
-    // Verificar que se haya llamado a getProducts del servicio
     expect(productProviderSpy.getProducts).toHaveBeenCalled();
 
-    // Verificar que los productos se hayan asignado correctamente en el componente
     expect(component.products).toEqual(mockProducts);
   });
 
   it('should call getProducts and update products on calling getProducts', fakeAsync(() => {
-    // Simular productos de ejemplo para la prueba
+
     const mockProducts = [
       { id: '1', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
       { id: '2', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
     ];
 
-    // Configurar el espía para que devuelva los productos de ejemplo
     productProviderSpy.getProducts.and.returnValue(of(mockProducts));
 
-    // Llamar a getProducts
     component.getProducts();
-    tick(); // Avanza el reloj virtual para completar la suscripción
+    tick()
 
-    // Verificar que se haya llamado a getProducts del servicio
     expect(productProviderSpy.getProducts).toHaveBeenCalled();
 
-    // Verificar que los productos se hayan asignado correctamente en el componente
     expect(component.products).toEqual(mockProducts);
   }));
 
   it('should handle product update', () => {
     const mockProduct: Product = { id: '1', name: 'Product 1', description: 'Description 1' , logo: '  ', date_release: '2021-01-01', date_revision: '2022-01-01'};
-
 
     component.editProduct(mockProduct);
 
@@ -134,20 +122,100 @@ describe('ProductComponent', () => {
   });
 
   it('should call deleteProduct and show alert on deleting a product', () => {
-    // Configura el objeto espía para que el método deleteProducts devuelva un Observable válido
+
     productProviderSpy.deleteProducts.and.returnValue(of({}));
   
-    // Espía la función 'alert' para que puedas verificar si se llama
     spyOn(window, 'alert');
-  
-    // Llama a la función que debería invocar deleteProduct
+
     component.deleteProduct('productIdToDelete');
   
-    // Deberías esperar que deleteProducts se haya llamado
     expect(productProviderSpy.deleteProducts).toHaveBeenCalledWith('productIdToDelete');
   
-    // Deberías verificar que se haya mostrado una alerta
     expect(window.alert).toHaveBeenCalledWith('Producto Borrado Correctamente');
   });
+
+  describe('Test Paginator', () => {
+    it('should initialize currentPage to 1', () => {
+      expect(component.currentPage).toBe(1);
+    });
+  
+    it('should calculate totalPages correctly', () => {
+      component.products = [
+        { id: '1', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '2', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+        { id: '3', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '4', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+        { id: '5', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '6', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+        { id: '7', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '8', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+        { id: '9', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '10', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+      ];
+      component.selectedLimit = 5;
+      component.updateDisplayedProducts();
+      expect(component.totalPages).toBe(2);
+    });
+  
+    it('should updateDisplayedProducts correctly', () => {
+      component.products = [
+        { id: '1', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '2', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+        { id: '3', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '4', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+        { id: '5', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '6', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+        { id: '7', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '8', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+        { id: '9', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '10', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+      ];
+      component.selectedLimit = 5;
+  
+      component.currentPage = 2;
+      component.updateDisplayedProducts();
+      expect(component.displayedProducts).toEqual([{ id: '6', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+      { id: '7', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+      { id: '8', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+      { id: '9', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+      { id: '10', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' }]);
+    });
+  
+    it('should navigate to the previous page', () => {
+      component.currentPage = 2;
+      component.previousPage();
+      expect(component.currentPage).toBe(1);
+    });
+  
+    it('should navigate to the next page', () => {
+      
+      component.currentPage = 1;
+      component.totalPages = 2;
+      component.nextPage();
+      expect(component.currentPage).toBe(2);
+    });
+  
+    it('should filter and updateDisplayedProducts on search text change', () => {
+      
+      component.products = [
+        { id: '1', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '2', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+        { id: '3', name: 'test 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '4', name: 'test 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+        { id: '5', name: 'test 3', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+      ];
+      component.searchText = 'Product';
+      component.onSearchTextChange();
+      expect(component.filteredProducts).toEqual([
+        { id: '1', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '2', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+      ]);
+      expect(component.currentPage).toBe(1);
+      expect(component.displayedProducts).toEqual([
+        { id: '1', name: 'Product 1', description: 'Description 1', logo: '', date_release: '', date_revision: '' },
+        { id: '2', name: 'Product 2', description: 'Description 2', logo: '', date_release: '', date_revision: '' },
+      ]);
+    });
+  })
  
 });

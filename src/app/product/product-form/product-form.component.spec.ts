@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { DebugElement } from '@angular/core';
 import { ProductFormComponent } from './product-form.component';
 import { ProductProvider } from 'src/app/providers/product.provider';
 import { of, throwError } from 'rxjs';
@@ -64,13 +63,13 @@ describe('ProductFormComponent', () => {
     
 
     it('should disable the "id" field in edit mode', () => {
-      // Configura el componente en modo de edición
+    
       component.isEdit = true;
     
-      // Simula la llamada a ngOnInit
+    
       component.ngOnInit();
     
-      // Verifica que el campo "id" esté deshabilitado
+    
       const idControl = component.productForm.get('id');
       expect(idControl?.disabled).toBeTrue();
     });
@@ -91,7 +90,6 @@ describe('ProductFormComponent', () => {
       expect(form.get('date_release')).toBeTruthy();
       expect(form.get('date_revision')).toBeTruthy();
 
-      // Test form control validations here
     });
 
     it('should disable id field in edit mode', () => {
@@ -164,8 +162,7 @@ describe('ProductFormComponent', () => {
   
     it('should log a message when form is invalid', () => {
       spyOn(console, 'log'); 
-  
-      // Llama a onSubmit
+    
       component.onSubmit();
   
       expect(console.log).toHaveBeenCalledWith('Formulario Invalidao');
@@ -203,12 +200,9 @@ describe('ProductFormComponent', () => {
     it('should handle form value changes', () => {
       const idControl:any = component.productForm.get('id');
       idControl.setValue('test-id');
-
-      // Simulate a value change event
+    
       idControl.markAsDirty();
       idControl.setValue('changed-id');
-
-      // Add expectations here to verify the behavior when a value changes
     });
   });
 
@@ -244,7 +238,7 @@ describe('ProductFormComponent', () => {
   
       const result = validator(control);
   
-      expect(result).toBeNull(); // Debe ser válido
+      expect(result).toBeNull();
     });
   
     it('should return isInvalid error for isValidId', () => {
@@ -261,12 +255,12 @@ describe('ProductFormComponent', () => {
   
     it('should return true for isFieldInvalid when field is touched and invalid', () => {
       component.productForm.get('name')?.markAsTouched();
-      component.productForm.get('name')?.setErrors({ 'required': true }); // Establece un error requerido
+      component.productForm.get('name')?.setErrors({ 'required': true });
     
       const fieldName = 'name';
       const result = component.isFieldInvalid(fieldName);
     
-      expect(result).toBeTrue(); // Debe devolver true
+      expect(result).toBeTrue();
     });
   
     it('should return false for isFieldInvalid', () => {

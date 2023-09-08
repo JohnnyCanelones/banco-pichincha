@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductRoutingModule } from './product-routing.module';
 import { FormsModule } from '@angular/forms';
@@ -25,7 +25,6 @@ import { ProductUpdateComponent } from './product-update/product-update.componen
   declarations: [
     ProductComponent,
     PageLimitPipe,
-    ProductFilterPipe,
     ProductFormComponent,
     ProductCreateComponent,
     ProductUpdateComponent,
@@ -39,10 +38,11 @@ import { ProductUpdateComponent } from './product-update/product-update.componen
     ReactiveFormsModule,
     MatFormFieldModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   providers: [
     ProductProvider,
+    ProductFilterPipe,
     DatePipe
   ]
 })

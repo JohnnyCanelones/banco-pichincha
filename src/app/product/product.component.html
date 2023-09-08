@@ -2,7 +2,7 @@
   <ng-container *ngIf="!updateProduct; else elseTemplate">
     <div class="top-table">
       <div class="search">
-        <input type="search" id="search" placeholder="Search"  [(ngModel)]="searchText">
+        <input type="search" id="search" placeholder="Search"  [(ngModel)]="searchText" (ngModelChange)="onSearchTextChange()">
       </div>
   
       <div class="add-button">
@@ -24,7 +24,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let product of products | productFilter: searchText | pageLimit:selectedLimit">
+            <tr *ngFor="let product of displayedProducts">
               <td> <img class="logo-img" [src]="product.logo" alt="product.name"></td>
               <td>{{product.name}}</td>
               <td>{{product.description}}</td>
@@ -47,12 +47,18 @@
           <span>Resultados: {{ products.length }}</span>
         </div>
         <div class="per-page">
-          <select class="show-select" [(ngModel)]="selectedLimit">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-          </select>
+          <div class="pagination-controls">
+            <select class="show-select" [(ngModel)]="selectedLimit" (change)="updateDisplayedProducts()">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+            <button mat-icon-button (click)="previousPage()" [disabled]="currentPage === 1"><mat-icon>keyboard_arrow_left</mat-icon></button>
+            <span>{{ currentPage }} / {{ totalPages }}</span>
+            <button mat-icon-button (click)="nextPage()" [disabled]="currentPage === totalPages"><mat-icon>keyboard_arrow_right</mat-icon></button>
+          </div>
+          
         </div>
       </div>
     </div>

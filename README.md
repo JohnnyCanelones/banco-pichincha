@@ -30,7 +30,7 @@ Follow these steps to get the project up and running:
     npm install
 
 3. Start the development server:
-  ```bash
+   ```bash
     npm install
 
 ## Usage
